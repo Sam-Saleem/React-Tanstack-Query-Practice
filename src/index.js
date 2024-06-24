@@ -1,17 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import WithoutQuery from "./pages/WithoutQuery";
+import WithQuery from "./pages/WithQuery";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const router = createBrowserRouter([
+  {
+    path: "",
+    element: <App />,
+  },
+  {
+    // Traditional data fetching component
+    path: "/withoutquery",
+    element: <WithoutQuery />,
+  },
+  {
+    // Using TanStack/React Query for data fetching component
+    path: "/withquery",
+    element: <WithQuery />,
+  },
+]);
+const client = new QueryClient();
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <QueryClientProvider client={client}>
+      <RouterProvider router={router}></RouterProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
