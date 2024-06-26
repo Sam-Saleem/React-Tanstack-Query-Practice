@@ -2,8 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 const WithQuery = () => {
+  // "useQuery": Used for fetching data from the server
+  // "useMutation": Used for modifing something on the server
+
   const { isPending, error, data } = useQuery({
-    // These two are the required properties
+    // These two are the required properties of useQuery
     queryKey: ["posts"], // unique identifier for each query
 
     // Function that handles the fetching logic, fetches the data returning a promise
@@ -57,3 +60,12 @@ const WithQuery = () => {
 };
 
 export default WithQuery;
+
+// Actions in React Query Devtools:
+
+// 1. Refetch: refetches the data by making the api call again
+// 2. Invalidate: works like refetch, invalidating the data present inside the cache like if something at the backend is changed
+// 3. Reset: allows to reset the entire state of all queries and mutations like a page reload
+// 4. Remove: removes the query from the cache
+// 5. Trigger Loading: simulate a loading state: shows the page if useQuery returned loading true/false
+// 6. Trigger Error: simulate an error state: shows the page if useQuery returned error true/false
