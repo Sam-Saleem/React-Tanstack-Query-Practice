@@ -8,6 +8,8 @@ const WithQuery = () => {
 
   const { isPending, error, data } = useQuery({
     // These two are the required properties of useQuery
+
+    // queryKey: it is almost always will be an array with a simple string but there are complex variations as well like for instance an array with the nested object
     queryKey: ["posts"], // unique identifier for each query
 
     // Function that handles the fetching logic, fetches the data returning a promise
@@ -16,6 +18,7 @@ const WithQuery = () => {
       const data = await res.json();
       return data;
     },
+
     // stale(outdated) time takes in a time value in milliseconds
     staleTime: 10000, // 10 secs
     // staleTime --> 0 by default: decides whether it's neccessary to fetch the data again or whether the data that's sitting in the cache can be reused when we interact with the application tab like switching tabs
@@ -62,15 +65,16 @@ const WithQuery = () => {
       {data &&
         data.map((post) => {
           return (
-            <div
+            <Link
+              to={`${post.id}`}
               key={post.id}
-              className="p-4 rounded-lg border border-gray-200 my-6 cursor-pointer hover:bg-gray-200"
+              className="p-4 rounded-lg block border border-gray-200 my-6 cursor-pointer hover:bg-gray-200"
             >
               <h2 className="font-bold text-lg mb-2 text-gray-400">
                 {post.title}
               </h2>
               <p className="text-gray-400">{post.body}</p>
-            </div>
+            </Link>
           );
         })}
     </div>
@@ -95,3 +99,4 @@ export default WithQuery;
 // 3. "Paused":
 // 4. "Stale": the query data is staled (outdated)
 // 5. "Inactive": the query is present somewhere in the application but it is not being used by any component that we have in the viewport rightnow.
+// and inactive queries do not get garbage collected right away they stay in the memory for a while so they are still used by react query when required

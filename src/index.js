@@ -7,6 +7,7 @@ import WithoutQuery from "./pages/WithoutQuery";
 import WithQuery from "./pages/WithQuery";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Post from "./pages/Post";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,11 @@ const router = createBrowserRouter([
     // Traditional data fetching component
     path: "/withoutquery",
     element: <WithoutQuery />,
+  },
+  {
+    // Using TanStack/React Query for data fetching component
+    path: "/withquery/:id",
+    element: <Post />,
   },
   {
     // Using TanStack/React Query for data fetching component
